@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "174756873505",
+    "project_id": "connectify-bb566",
+    "storage_bucket": "connectify-bb566.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:174756873505:android:5d068b13b65b07e2452a60",
+        "android_client_info": {
+          "package_name": "com.shahid.connectify"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDntWPtGgsuqSpNoLBt9rns9I-hgJCA7DU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
