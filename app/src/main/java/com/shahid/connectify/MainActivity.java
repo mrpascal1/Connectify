@@ -17,5 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 //afifa
+        // New line comment
+
     }
 }
