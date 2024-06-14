@@ -47,6 +47,7 @@ ActivityMainBinding binding;
         FragmentTransaction replace = fragmentTransaction.replace(R.id.Fragment, fragment);
         fragmentTransaction.commit();
 
+    // connectify update
     }
 
 }
