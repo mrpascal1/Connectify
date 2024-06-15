@@ -1,3 +1,6 @@
 <resources>
-    <string name="app_name">Connectify</string>
+    <string name="background_image_desc">Background image</string>
+    <string name="connectify_logo_desc">Connectify logo</string>
+    <string name="connectify_text_desc">Connectify text</string>
+    <string name="connect_share_thrive_desc">Connect, Share, Thrive text</string>
 </resources>

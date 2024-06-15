@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/background_gradient"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/connectify_logo" />
+
+    <TextView
+        android:id="@+id/sign_in_title"
+        android:layout_width="252dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/button_gradient"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="SIGN IN"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:hint="Username"
+        android:background="@drawable/edittext_background"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:padding="10dp"
+        android:layout_marginBottom="20dp" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:background="@drawable/edittext_background"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:padding="10dp"
+        android:layout_marginBottom="20dp" />
+
+    <TextView
+        android:id="@+id/sign_in_note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Note: New User? Register"
+        android:textColor="#AAAAAA"
+        android:textSize="14sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp" />
+
+    <TextView
+        android:id="@+id/login_button"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="LOGIN!"
+        android:textSize="24sp"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button_gradient"
+        android:padding="10dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:textAlignment="center" />
+
+</LinearLayout>
