@@ -13,6 +13,7 @@ android {
         targetSdk 34
         versionCode 1
         versionName "1.0"
+        vectorDrawables.useSupportLibrary=true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -44,6 +45,8 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation libs.navigation.fragment
     implementation libs.navigation.ui
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.google.android.material:material:1.1.0'
 
 
     testImplementation libs.junit
