@@ -11,11 +11,17 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.shahid.connectify.databinding.ActivityMainBinding;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 public class MainActivity extends AppCompatActivity {
-ActivityMainBinding binding;
+    ActivityMainBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,23 +36,22 @@ ActivityMainBinding binding;
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
 
-          if (item.getItemId()==R.id.house){
-              replaceFragment(new FragmentHome());
-          } else if (item.getItemId()==R.id.profile) {
-              replaceFragment(new FragmentProfile());
-          } else if (item.getItemId()==R.id.dashboard) {
-              replaceFragment(new FragmentDashboard());
-          }
+            if (item.getItemId() == R.id.house) {
+                replaceFragment(new FragmentHome());
+            } else if (item.getItemId() == R.id.profile) {
+                replaceFragment(new FragmentProfile());
+            } else if (item.getItemId() == R.id.dashboard) {
+                replaceFragment(new FragmentDashboard());
+            }
             return true;
         });
     }
 
-    private void replaceFragment(Fragment fragment){
-        FragmentManager fragmentManager=getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction= fragmentManager.beginTransaction();
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         FragmentTransaction replace = fragmentTransaction.replace(R.id.Fragment, fragment);
         fragmentTransaction.commit();
 
     }
-
 }

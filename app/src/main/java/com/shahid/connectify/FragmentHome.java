@@ -1,6 +1,21 @@
 package com.shahid.connectify;
 
+import com.shahid.connectify.R;
 import android.os.Bundle;
+import android.content.Context;
+import android.provider.ContactsContract;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
+
 
 import androidx.fragment.app.Fragment;
 
@@ -9,10 +24,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class FragmentHome extends Fragment {
-
-    public FragmentHome() {
-        // Required empty public constructor
-    }
 
 
     @Override
