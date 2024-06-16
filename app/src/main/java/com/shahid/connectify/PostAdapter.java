@@ -15,12 +15,12 @@ import java.util.List;
 
 class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
-    private List<Post> profiles;
+    private List<Post> posts;
     private Context context;
 
-    public PostAdapter(Context context, List<Post> profiles) {
+    public PostAdapter(Context context, List<Post> posts) {
         this.context = context;
-        this.profiles = profiles;
+        this.posts = posts;
     }
 
     @NonNull
@@ -32,9 +32,9 @@ class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Post profile = profiles.get(position);
+        Post profile = posts.get(position);
         holder.username.setText(profile.getUsername());
-        holder.date.setText(profile.getDate());
+        holder.date.setText(profile.getTimestamp());
         holder.description.setText(profile.getDescription());
         holder.profileImage.setImageResource(profile.getImageResId());
         holder.likesCount.setText(String.valueOf(profile.getLikes()));
@@ -42,13 +42,13 @@ class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return profiles.size();
+        return posts.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        EditText username;
-        EditText date;
-        EditText description;
+        TextView username;
+        TextView date;
+        TextView description;
         ImageView profileImage;
         TextView likesCount;
 
