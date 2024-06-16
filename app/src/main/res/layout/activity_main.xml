@@ -17,10 +17,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-<FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/Fragment"/>
+
+    <FrameLayout
+        android:id="@+id/Fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <com.google.android.material.bottomappbar.BottomAppBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -48,5 +50,6 @@
     android:src="@drawable/baseline_add_photo_alternate_24"
     app:layout_anchor="@id/BottomApp"
     app:maxImageSize="40dp"
-    app:tint = "@color/teal_700"/>
+    app:tint = "@color/teal_700"
+    tools:ignore="ContentDescription" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
