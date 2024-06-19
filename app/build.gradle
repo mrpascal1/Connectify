@@ -13,6 +13,7 @@ android {
         targetSdk 34
         versionCode 1
         versionName "1.0"
+        vectorDrawables.useSupportLibrary=true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -34,6 +35,7 @@ android {
 
 dependencies {
 
+    implementation 'com.google.android.material:material:1.0.0'
     implementation libs.appcompat
     implementation libs.material
     implementation libs.activity
@@ -41,6 +43,11 @@ dependencies {
 
     implementation platform('com.google.firebase:firebase-bom:33.1.0')
     implementation("com.google.firebase:firebase-analytics")
+    implementation libs.navigation.fragment
+    implementation libs.navigation.ui
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.google.android.material:material:1.1.0'
+    implementation libs.firebase.database
 
 
     testImplementation libs.junit

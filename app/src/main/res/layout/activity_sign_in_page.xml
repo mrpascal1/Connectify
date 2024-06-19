@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:background="@drawable/background_gradient"
-    tools:context=".MainActivity">
+    tools:context=".main_animation">
 
     <ImageView
         android:id="@+id/logo"
