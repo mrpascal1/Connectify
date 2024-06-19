@@ -9,12 +9,12 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class main_animation extends AppCompatActivity {
+ class ActivityMain extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_animation);
+        setContentView(R.layout.activity_main);
 
         // Get the ImageViews
         ImageView imageView2 = findViewById(R.id.imageView2);
@@ -65,7 +65,7 @@ public class main_animation extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                Intent intent = new Intent(main_animation.this, RegistrationActivity.class);
+                Intent intent = new Intent(ActivityMain.this, RegistrationActivity.class);
                 startActivity(intent);
                 finish(); // Close the current activity
             }

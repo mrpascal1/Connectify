@@ -37,14 +37,14 @@ public class RegistrationActivity extends AppCompatActivity {
             String email = emailEditText.getText().toString().trim();
             String password = passwordEditText.getText().toString().trim();
             if (!email.isEmpty() && !password.isEmpty()) {
-                postEmailPass(String.valueOf(usernameEditText),email, password);
+                post(String.valueOf(usernameEditText),email, password);
             } else {
                 Toast.makeText(RegistrationActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    public void postEmailPass(String username,String email, String pass) {
+    public void post(String username,String email, String pass) {
         HashMap<String, String> map = new HashMap<>();
         map.put("Username",username);
         map.put("EmailID", email);
