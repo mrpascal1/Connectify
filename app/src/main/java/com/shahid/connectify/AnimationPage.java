@@ -9,22 +9,32 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
- class ActivityMain extends AppCompatActivity {
+public class AnimationPage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.animation_page);
 
         // Get the ImageViews
         ImageView imageView2 = findViewById(R.id.imageView2);
         ImageView imageView3 = findViewById(R.id.imageView3);
         ImageView imageView4 = findViewById(R.id.imageView4);
 
+        // Ensure the ImageViews are found
+        if (imageView2 == null || imageView3 == null || imageView4 == null) {
+            throw new RuntimeException("One of the ImageViews is not found in the layout file.");
+        }
+
         // Load the animations
         Animation riseUpAnimation1 = AnimationUtils.loadAnimation(this, R.anim.rise_up);
         Animation riseUpAnimation2 = AnimationUtils.loadAnimation(this, R.anim.rise_up);
         Animation riseUpAnimation3 = AnimationUtils.loadAnimation(this, R.anim.rise_up);
+
+        // Ensure the animations are loaded
+        if (riseUpAnimation1 == null || riseUpAnimation2 == null || riseUpAnimation3 == null) {
+            throw new RuntimeException("One of the animations is not found in the anim resources.");
+        }
 
         // Initially hide the views
         imageView3.setVisibility(View.GONE);
@@ -65,7 +75,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                Intent intent = new Intent(ActivityMain.this, RegistrationActivity.class);
+                Intent intent = new Intent(AnimationPage.this, SignInActivity.class);
                 startActivity(intent);
                 finish(); // Close the current activity
             }
