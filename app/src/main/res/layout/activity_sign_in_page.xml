@@ -32,7 +32,7 @@
         android:id="@+id/username"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:hint="Username"
+        android:hint="Email"
         android:background="@drawable/edittext_background"
         android:textColor="#FFFFFF"
         android:textColorHint="#FFFFFF"
