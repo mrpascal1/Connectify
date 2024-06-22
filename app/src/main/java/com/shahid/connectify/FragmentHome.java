@@ -55,29 +55,23 @@ public class FragmentHome extends Fragment {
     }
 
     public void setDummyData() {
-        postList.add(
-                new Post("Test",
-                        "11-09-2025",
-                        "Test Desccription",
-                        "Post Title",
-                        R.drawable.img1,
-                        200)
-        );
-        postList.add(
-                new Post("Test 2",
-                        "11-09-2024",
-                        "Test Desccription 2",
-                        "Post Title 2",
-                        R.drawable.img1,
-                        20)
-        );
-        postList.add(
-                new Post("Test 3",
-                        "11-09-2023",
-                        "Test Desccription 3",
-                        "Post Title 3",
-                        R.drawable.img1,
-                        24)
-        );
+//        postList.add(
+//                new Post("Test",
+//                        "11-09-2025",
+//                        "Test Desccription",
+//                        "Post Title")
+//        );
+//        postList.add(
+//                new Post("Test 2",
+//                        "11-09-2024",
+//                        "Test Desccription 2",
+//                        "Post Title 2")
+//        );
+//        postList.add(
+//                new Post("Test 3",
+//                        "11-09-2023",
+//                        "Test Desccription 3",
+//                        "Post Title 3")
+//        );
     }
 }

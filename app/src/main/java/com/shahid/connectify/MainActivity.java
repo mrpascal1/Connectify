@@ -1,6 +1,8 @@
 package com.shahid.connectify;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +19,8 @@ import kotlin.jvm.functions.Function1;
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     private MeowBottomNavigation bnv;
+
+    private int lastSelected = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +40,23 @@ public class MainActivity extends AppCompatActivity {
         bnv.setOnClickMenuListener(new Function1<MeowBottomNavigation.Model, Unit>() {
             @Override
             public Unit invoke(MeowBottomNavigation.Model model) {
+                if (model.getId() != 2) {
+                    lastSelected = model.getId();
+                }
+
                 switch (model.getId()) {
                     case 1:
                         replaceFragment(new FragmentHome());
                         break;
                     case 2:
-                        replaceFragment(new FragmentDashboard());
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                resetSelectionForAddPost();
+                            }
+                        }, 100);
+                        Intent intent = new Intent(MainActivity.this, AddPostActivity.class);
+                        startActivity(intent);
                         break;
                     case 3:
                         replaceFragment(new FragmentUsers());
@@ -60,5 +75,9 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.Fragment, fragment);
         fragmentTransaction.commit();
+    }
+
+    private void resetSelectionForAddPost() {
+        bnv.show(lastSelected, true);
     }
 }

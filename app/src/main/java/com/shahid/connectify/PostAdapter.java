@@ -36,8 +36,8 @@ class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         holder.username.setText(profile.getUsername());
         holder.date.setText(profile.getTimestamp());
         holder.description.setText(profile.getDescription());
-        holder.profileImage.setImageResource(profile.getImageResId());
-        holder.likesCount.setText(String.valueOf(profile.getLikes()));
+        //holder.profileImage.setImageResource(profile.getImageResId());
+        //holder.likesCount.setText(String.valueOf(profile.getLikes()));
     }
 
     @Override
