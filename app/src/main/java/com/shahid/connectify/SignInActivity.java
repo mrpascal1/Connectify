@@ -1,5 +1,6 @@
 package com.shahid.connectify;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -27,6 +28,8 @@ public class SignInActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
+    private ProgressDialog progressDialog;
+
     @Override
     public void onStart() {
         super.onStart();
@@ -48,6 +51,7 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in_page);
 
+        initProgressDialog();
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
@@ -79,18 +83,20 @@ public class SignInActivity extends AppCompatActivity {
                     Toast.makeText(SignInActivity.this, "Enter password", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
+                progressDialog.show();
                 mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(SignInActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
+                                progressDialog.dismiss();
                                 if (task.isSuccessful()) {
                                     // Sign in success, update UI with the signed-in user's information
                                     Toast.makeText(SignInActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
                                     FirebaseUser user = mAuth.getCurrentUser();
-                                   // Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                                   // startActivity(intent);
-                                   // finish();
+                                    Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
+                                    finish();
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w("SignInActivity", "Login Failed", task.getException());
@@ -101,5 +107,12 @@ public class SignInActivity extends AppCompatActivity {
                         });
             }
         });
+    }
+    private void initProgressDialog() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Logging in...");
+        progressDialog.setTitle("Connectify");
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
     }
 }

@@ -10,14 +10,19 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class AnimationPage extends AppCompatActivity {
 
     private static final String TAG = "AnimationPage";
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.animation_page);
+
+        auth = FirebaseAuth.getInstance();
 
         // Get the ImageViews
         ImageView imageView2 = findViewById(R.id.imageView2);
@@ -74,7 +79,12 @@ public class AnimationPage extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                Intent intent = new Intent(AnimationPage.this, SignInActivity.class);
+                Intent intent;
+                if (isLoggedIn()) {
+                    intent = new Intent(AnimationPage.this, MainActivity.class);
+                } else {
+                    intent = new Intent(AnimationPage.this, SignInActivity.class);
+                }
                 startActivity(intent);
                 finish(); // Close the current activity
             }
@@ -85,5 +95,12 @@ public class AnimationPage extends AppCompatActivity {
 
         // Start the first animation
         imageView2.startAnimation(riseUpAnimation1);
+    }
+
+    public boolean isLoggedIn() {
+        if (auth.getCurrentUser() != null) {
+            return true;
+        }
+        return false;
     }
 }

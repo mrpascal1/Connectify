@@ -1,5 +1,6 @@
 package com.shahid.connectify;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -34,6 +35,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText reenterPasswordEditText;
     private TextView signInShift;
     private FirebaseAuth mAuth;
+    private ProgressDialog progressDialog;
 
     @Override
     public void onStart() {
@@ -57,6 +59,8 @@ public class RegistrationActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         mAuth = FirebaseAuth.getInstance();
+
+        initProgressDialog();
 
         // Initialize views using View Binding
         registerButton = binding.registerButton;
@@ -164,6 +168,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     private void createFirebaseUser(String username, String email, String password) {
+        progressDialog.show();
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -174,6 +179,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                 saveUserToDatabase(username, email);
                             }
                         } else {
+                            progressDialog.dismiss();
                             Toast.makeText(RegistrationActivity.this, "Authentication failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -189,6 +195,7 @@ public class RegistrationActivity extends AppCompatActivity {
         HashMap<String, String> userMap = new HashMap<>();
         userMap.put("Username", username);
         userMap.put("EmailID", email);
+        userMap.put("userId", userId);
 
         databaseReference.child(userId).setValue(userMap)
                 .addOnSuccessListener(aVoid -> {
@@ -198,17 +205,25 @@ public class RegistrationActivity extends AppCompatActivity {
                     passwordEditText.setText("");
                     usernameEditText.setText("");
                     reenterPasswordEditText.setText("");
+                    progressDialog.dismiss();
 
-                    /*
                     // Navigate to MainActivity or any other activity
                     Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     finish();
 
-                     */
                 })
                 .addOnFailureListener(e -> {
+                    progressDialog.dismiss();
                     Toast.makeText(RegistrationActivity.this, "Registration failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
+    }
+    private void initProgressDialog() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Registering user...");
+        progressDialog.setTitle("Connectify");
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
     }
 }
