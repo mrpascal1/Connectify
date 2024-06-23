@@ -3,7 +3,6 @@ package com.shahid.connectify;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
@@ -34,20 +33,23 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText usernameEditText;
     private EditText reenterPasswordEditText;
     private TextView signInShift;
-    FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
 
+    @Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
+        if (currentUser != null) {
             /*
-            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
             finish();
-            */
+
+             */
         }
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +57,7 @@ public class RegistrationActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         mAuth = FirebaseAuth.getInstance();
+
         // Initialize views using View Binding
         registerButton = binding.registerButton;
         emailEditText = binding.email;
@@ -69,7 +72,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 String email = emailEditText.getText().toString().trim();
                 String password = passwordEditText.getText().toString().trim();
                 String username = usernameEditText.getText().toString().trim();
-                post(username, email, password);
+                createFirebaseUser(username, email, password);
             }
         });
 
@@ -107,14 +110,7 @@ public class RegistrationActivity extends AppCompatActivity {
             usernameEditText.setError("Username cannot contain spaces");
             return false;
         }
-        if (isReservedWord(username)) {
-            usernameEditText.setError("Username cannot be a reserved word");
-            return false;
-        }
-        if (isUsernameTaken(username)) {
-            usernameEditText.setError("Username is already taken");
-            return false;
-        }
+        // Implement actual checks for reserved words and existing usernames in your database
         return true;
     }
 
@@ -127,14 +123,7 @@ public class RegistrationActivity extends AppCompatActivity {
             emailEditText.setError("Enter a valid email address");
             return false;
         }
-        if (!isValidDomain(email)) {
-            emailEditText.setError("Enter a valid email domain");
-            return false;
-        }
-        if (isEmailRegistered(email)) {
-            emailEditText.setError("Email is already registered");
-            return false;
-        }
+        // Implement actual check for existing email in your database
         return true;
     }
 
@@ -174,48 +163,34 @@ public class RegistrationActivity extends AppCompatActivity {
         return true;
     }
 
-    private boolean isUsernameTaken(String username) {
-        // Placeholder for actual implementation
-        // You need to implement this method to check if the username is taken
-        return false;
+    private void createFirebaseUser(String username, String email, String password) {
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            if (user != null) {
+                                saveUserToDatabase(username, email);
+                            }
+                        } else {
+                            Toast.makeText(RegistrationActivity.this, "Authentication failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
-    private boolean isReservedWord(String username) {
-        // Placeholder for actual implementation
-        // You need to implement this method to check if the username is a reserved word
-        return false;
-    }
-
-    private boolean isValidDomain(String email) {
-        // Placeholder for actual implementation
-        // You need to implement this method to check if the email domain is valid
-        return true;
-    }
-
-    private boolean isEmailRegistered(String email) {
-        // Placeholder for actual implementation
-        // You need to implement this method to check if the email is already registered
-        return false;
-    }
-
-    private String hashPassword(String password) {
-        // Placeholder for password hashing
-        // Implement a proper password hashing mechanism here (e.g., using BCrypt)
-        return password; // Replace this with actual hashed password
-    }
-
-    public void post(String username, String email, String pass) {
-        String hashedPassword = hashPassword(pass);
-
-        HashMap<String, String> map = new HashMap<>();
-        map.put("Username", username);
-        map.put("EmailID", email);
-        map.put("PassWord", hashedPassword);
-
+    private void saveUserToDatabase(String username, String email) {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference("Users");
 
-        databaseReference.push().setValue(map)
+        String uniqueKey = databaseReference.push().getKey();
+        String userId = mAuth.getCurrentUser().getUid();
+        HashMap<String, String> userMap = new HashMap<>();
+        userMap.put("Username", username);
+        userMap.put("EmailID", email);
+
+        databaseReference.child(userId).setValue(userMap)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(RegistrationActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
                     // Clear the input fields
@@ -223,35 +198,17 @@ public class RegistrationActivity extends AppCompatActivity {
                     passwordEditText.setText("");
                     usernameEditText.setText("");
                     reenterPasswordEditText.setText("");
+
+                    /*
+                    // Navigate to MainActivity or any other activity
+                    Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+
+                     */
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(RegistrationActivity.this, "Registration failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email,password;
-                email = String.valueOf(emailEditText.getText());
-                password = String.valueOf(passwordEditText.getText());
-
-
-                mAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(RegistrationActivity.this, "Account Created.",
-                                            Toast.LENGTH_SHORT).show();
-
-                                } else {
-                                    Toast.makeText(RegistrationActivity.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
-
-                                }
-                            }
-                        });
-            }
-        });
     }
-
 }

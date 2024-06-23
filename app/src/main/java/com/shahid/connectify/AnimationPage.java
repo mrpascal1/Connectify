@@ -2,6 +2,7 @@ package com.shahid.connectify;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -10,6 +11,8 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class AnimationPage extends AppCompatActivity {
+
+    private static final String TAG = "AnimationPage";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,18 +26,14 @@ public class AnimationPage extends AppCompatActivity {
 
         // Ensure the ImageViews are found
         if (imageView2 == null || imageView3 == null || imageView4 == null) {
-            throw new RuntimeException("One of the ImageViews is not found in the layout file.");
+            Log.e(TAG, "One of the ImageViews is not found in the layout file.");
+            return;
         }
 
         // Load the animations
         Animation riseUpAnimation1 = AnimationUtils.loadAnimation(this, R.anim.rise_up);
         Animation riseUpAnimation2 = AnimationUtils.loadAnimation(this, R.anim.rise_up);
         Animation riseUpAnimation3 = AnimationUtils.loadAnimation(this, R.anim.rise_up);
-
-        // Ensure the animations are loaded
-        if (riseUpAnimation1 == null || riseUpAnimation2 == null || riseUpAnimation3 == null) {
-            throw new RuntimeException("One of the animations is not found in the anim resources.");
-        }
 
         // Initially hide the views
         imageView3.setVisibility(View.GONE);
