@@ -33,6 +33,7 @@ class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Post profile = posts.get(position);
+        holder.title.setText(profile.getTitle());
         holder.username.setText(profile.getUsername());
         holder.date.setText(profile.getTimestamp());
         holder.description.setText(profile.getDescription());
@@ -48,12 +49,14 @@ class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView username;
         TextView date;
+        TextView title;
         TextView description;
         ImageView profileImage;
         TextView likesCount;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            title = itemView.findViewById(R.id.post_title);
             username = itemView.findViewById(R.id.username);
             date = itemView.findViewById(R.id.date);
             description = itemView.findViewById(R.id.profile_description);

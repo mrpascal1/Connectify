@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                         replaceFragment(new FragmentUsers());
                         break;
                     case 4:
-                        replaceFragment(new FragmentProfile());
+                        //replaceFragment(new FragmentProfile());
                         break;
                 }
                 return null;

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/background_image">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/connectify_logo"
+        android:layout_marginBottom="30dp" />
+
+    <TextView
+        android:id="@+id/sign_up_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SIGN UP!"
+        android:textSize="24sp"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/title_gradient"
+        android:padding="10dp"
+        android:layout_marginBottom="30dp" />
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:hint="Username"
+        android:background="@drawable/edittext_background"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:padding="10dp"
+        android:layout_marginBottom="20dp" />
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:hint="Email"
+        android:background="@drawable/edittext_background"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:padding="10dp"
+        android:layout_marginBottom="20dp" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:background="@drawable/edittext_background"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:padding="10dp"
+        android:layout_marginBottom="20dp" />
+
+    <EditText
+        android:id="@+id/reenter_password"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:hint="Re-Enter Password"
+        android:inputType="textPassword"
+        android:background="@drawable/edittext_background"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:padding="10dp"
+        android:layout_marginBottom="20dp" />
+
+    <TextView
+        android:id="@+id/login_note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Note: Already a user? "
+        android:textColor="#AAAAAA"
+        android:textSize="14sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp" />
+
+    <TextView
+        android:id="@+id/login_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login!"
+        android:textColor="#00FF00"
+        android:textSize="14sp"
+        android:layout_marginBottom="20dp" />
+
+    <TextView
+        android:id="@+id/register_button"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="  REGISTER"
+        android:textSize="24sp"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/title_gradient"
+        android:padding="10dp"
+        android:layout_marginBottom="30dp" />
+</LinearLayout>
