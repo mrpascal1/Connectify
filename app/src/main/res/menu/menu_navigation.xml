@@ -12,10 +12,16 @@
         android:title=""
         android:enabled="true"/>
 
+    <item
+        android:id="@+id/users"
+        android:title="Profile"
+        android:icon="@drawable/baseline_supervised_user_circle_24"/>
+
         <item
             android:id="@+id/profile"
             android:title="Profile"
             android:icon="@drawable/baseline_person_24"/>
+
 
 
 
