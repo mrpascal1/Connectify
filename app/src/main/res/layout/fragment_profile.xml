@@ -11,19 +11,29 @@
     android:fontFamily="sans-serif-black"
     >
 
-    <ImageView
+
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageView"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:scaleType="centerInside"
-        app:flow_horizontalAlign="center"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/img1"
         app:layout_constraintBottom_toBottomOf="@id/profile"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/recycler"
-        app:layout_constraintVertical_bias="0.72"
-        app:srcCompat="@android:drawable/presence_invisible" />
+        app:layout_constraintVertical_bias="0.679"/>
+
+    <FrameLayout
+        android:id="@+id/pencilIv"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/bg_circle"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
@@ -42,7 +52,6 @@
         android:text="Profile"
         android:textAlignment="center"
         android:textSize="20sp"
-
             />
 
     <Button
@@ -61,22 +70,24 @@
         android:id="@+id/bio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-black"
         android:text="BIO"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/username"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/post"
-        app:layout_constraintVertical_bias="0.681"
-        android:textStyle="bold"
-        android:fontFamily="sans-serif-black"/>
+        app:layout_constraintVertical_bias="0.757" />
 
     <TextView
         android:id="@+id/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Username"
-        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/imageView"
         app:layout_constraintLeft_toLeftOf="parent"

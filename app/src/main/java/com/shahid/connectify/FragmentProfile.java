@@ -2,11 +2,15 @@ package com.shahid.connectify;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 
 public class FragmentProfile extends Fragment {
@@ -20,11 +24,4 @@ public class FragmentProfile extends Fragment {
         // Required empty public constructor
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        Post p = new Post();
-        return inflater.inflate(R.layout.fragment_profile, container, false);
-    }
 }
