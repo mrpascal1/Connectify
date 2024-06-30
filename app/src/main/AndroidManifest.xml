@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Connectify"
         tools:targetApi="31">
         <activity
+            android:name=".FragmentEditProfile"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
