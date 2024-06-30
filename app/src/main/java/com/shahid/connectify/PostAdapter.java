@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
@@ -37,6 +39,12 @@ class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         holder.username.setText(profile.getUsername());
         holder.date.setText(profile.getTimestamp());
         holder.description.setText(profile.getDescription());
+        if (profile.getImageUrl() != null) {
+            Glide.with(context).load(profile.getImageUrl()).into(holder.profileImage);
+        } else  {
+            Glide.with(context).load(R.drawable.img1).into(holder.profileImage);
+        }
+
         //holder.profileImage.setImageResource(profile.getImageResId());
         //holder.likesCount.setText(String.valueOf(profile.getLikes()));
     }

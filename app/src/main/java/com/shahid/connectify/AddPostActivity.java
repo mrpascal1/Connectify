@@ -70,7 +70,7 @@ public class AddPostActivity extends AppCompatActivity {
         DatabaseReference databaseReference = firebaseDatabase.getReference("Posts");
         String uniqueKey = databaseReference.push().getKey();
 
-        Post post = new Post(uniqueKey, "Alice", timestamp, description, title);
+        Post post = new Post(uniqueKey, "Alice", timestamp, description, title, "");
 
         HashMap<String, Object> map = new HashMap<>();
         map.put(uniqueKey, post);
