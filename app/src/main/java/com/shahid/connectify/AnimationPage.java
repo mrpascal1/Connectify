@@ -6,34 +6,25 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.shahid.connectify.databinding.AnimationPageBinding;
 
 public class AnimationPage extends AppCompatActivity {
 
     private static final String TAG = "AnimationPage";
     private FirebaseAuth auth;
+    private AnimationPageBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.animation_page);
+        binding = AnimationPageBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         auth = FirebaseAuth.getInstance();
-
-        // Get the ImageViews
-        ImageView imageView2 = findViewById(R.id.imageView2);
-        ImageView imageView3 = findViewById(R.id.imageView3);
-        ImageView imageView4 = findViewById(R.id.imageView4);
-
-        // Ensure the ImageViews are found
-        if (imageView2 == null || imageView3 == null || imageView4 == null) {
-            Log.e(TAG, "One of the ImageViews is not found in the layout file.");
-            return;
-        }
 
         // Load the animations
         Animation riseUpAnimation1 = AnimationUtils.loadAnimation(this, R.anim.rise_up);
@@ -41,8 +32,8 @@ public class AnimationPage extends AppCompatActivity {
         Animation riseUpAnimation3 = AnimationUtils.loadAnimation(this, R.anim.rise_up);
 
         // Initially hide the views
-        imageView3.setVisibility(View.GONE);
-        imageView4.setVisibility(View.GONE);
+        binding.imageView3.setVisibility(View.GONE);
+        binding.imageView4.setVisibility(View.GONE);
 
         // Set the animation listeners to chain animations
         riseUpAnimation1.setAnimationListener(new Animation.AnimationListener() {
@@ -51,8 +42,8 @@ public class AnimationPage extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                imageView3.setVisibility(View.VISIBLE);
-                imageView3.startAnimation(riseUpAnimation2);
+                binding.imageView3.setVisibility(View.VISIBLE);
+                binding.imageView3.startAnimation(riseUpAnimation2);
             }
 
             @Override
@@ -65,8 +56,8 @@ public class AnimationPage extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                imageView4.setVisibility(View.VISIBLE);
-                imageView4.startAnimation(riseUpAnimation3);
+                binding.imageView4.setVisibility(View.VISIBLE);
+                binding.imageView4.startAnimation(riseUpAnimation3);
             }
 
             @Override
@@ -94,13 +85,10 @@ public class AnimationPage extends AppCompatActivity {
         });
 
         // Start the first animation
-        imageView2.startAnimation(riseUpAnimation1);
+        binding.imageView2.startAnimation(riseUpAnimation1);
     }
 
     public boolean isLoggedIn() {
-        if (auth.getCurrentUser() != null) {
-            return true;
-        }
-        return false;
+        return auth.getCurrentUser() != null;
     }
 }

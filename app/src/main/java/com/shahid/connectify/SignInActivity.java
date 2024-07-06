@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,16 +16,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.shahid.connectify.databinding.ActivitySignInPageBinding;
 
 public class SignInActivity extends AppCompatActivity {
 
-    private EditText emailEditTxt;
-    private EditText passwordEditTxt;
-    private TextView loginButton;
-    private TextView newUserTextView;
-
+    private ActivitySignInPageBinding binding;
     private FirebaseAuth mAuth;
-
     private ProgressDialog progressDialog;
 
     @Override
@@ -40,27 +34,23 @@ public class SignInActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             // User is already signed in, navigate to MainActivity
-          //  Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-          //  startActivity(intent);
-          //  finish();
+            // Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+            // startActivity(intent);
+            // finish();
         }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_in_page);
+        binding = ActivitySignInPageBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         initProgressDialog();
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
-        emailEditTxt = findViewById(R.id.username);
-        passwordEditTxt = findViewById(R.id.password);
-        newUserTextView = findViewById(R.id.sign_in_note);
-        loginButton = findViewById(R.id.login_button);
-
-        newUserTextView.setOnClickListener(new View.OnClickListener() {
+        binding.signInNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SignInActivity.this, RegistrationActivity.class);
@@ -69,11 +59,11 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        binding.loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = emailEditTxt.getText().toString().trim();
-                String password = passwordEditTxt.getText().toString().trim();
+                String email = binding.username.getText().toString().trim();
+                String password = binding.password.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
                     Toast.makeText(SignInActivity.this, "Enter email", Toast.LENGTH_SHORT).show();
@@ -108,6 +98,7 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
     }
+
     private void initProgressDialog() {
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Logging in...");
