@@ -1,5 +1,6 @@
 package com.shahid.connectify;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,6 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -43,6 +45,7 @@ public class FragmentHome extends Fragment {
     private FirebaseDatabase firebaseDatabase;
 
     private ProgressDialog progressDialog;
+    private FirebaseAuth auth;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,10 +58,20 @@ public class FragmentHome extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        auth = FirebaseAuth.getInstance();
+
         initProgressDialog();
         postList = new ArrayList<>();
         firebaseDatabase = FirebaseDatabase.getInstance();
-        postAdapter = new PostAdapter(requireActivity(), postList);
+        postAdapter = new PostAdapter(requireActivity(), postList, getUID());
+
+        postAdapter.setiAdapterClick(new IAdapterClick() {
+            @Override
+            public void onLikeClick(int position, String postId) {
+                setLike(postId);
+            }
+        });
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireActivity(), RecyclerView.VERTICAL, true);
         linearLayoutManager.setStackFromEnd(true);
         binding.postRecyclerView.setLayoutManager(linearLayoutManager);
@@ -70,7 +83,7 @@ public class FragmentHome extends Fragment {
     private void getData() {
         progressDialog.show();
         DatabaseReference databaseReference = firebaseDatabase.getReference("Posts");
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 postList.clear();
@@ -91,6 +104,36 @@ public class FragmentHome extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 progressDialog.dismiss();
+            }
+        });
+    }
+
+    private String getUID() {
+        if (auth.getCurrentUser() != null) {
+            return auth.getCurrentUser().getUid();
+        }
+        return "";
+    }
+
+
+    private void setLike(String postId) {
+        DatabaseReference likeRef =  firebaseDatabase.getReference("Posts/" + postId + "/likes");
+        DatabaseReference userRef =  firebaseDatabase.getReference("Posts/" + postId + "/likes/" + getUID());
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    userRef.removeValue();
+                } else {
+                    HashMap<String, Object> map = new HashMap<>();
+                    map.put(getUID(), true);
+                    likeRef.updateChildren(map);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }

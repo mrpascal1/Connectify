@@ -51,7 +51,7 @@ public class FragmentProfile extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         postList = new ArrayList<>();
         firebaseDatabase = FirebaseDatabase.getInstance();
-        postAdapter = new PostAdapter(requireActivity(), postList);
+        postAdapter = new PostAdapter(requireActivity(), postList, "");
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireActivity(), RecyclerView.VERTICAL, true);
         linearLayoutManager.setStackFromEnd(true);
         binding.postRecyclerView.setLayoutManager(linearLayoutManager);
