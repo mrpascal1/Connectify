@@ -48,8 +48,9 @@ class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         Post profile = posts.get(position);
         holder.title.setText(profile.getTitle());
         holder.username.setText(profile.getUsername());
-        holder.date.setText(profile.getTimestamp());
+        holder.date.setText(profile.getFormattedTimestamp());
         holder.description.setText(profile.getDescription());
+
         if (profile.getImageUrl() != null) {
             Glide.with(context).load(profile.getImageUrl()).placeholder(R.drawable.img1).into(holder.profileImage);
         } else  {

@@ -4,7 +4,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -82,27 +84,41 @@ public class AddPostActivity extends AppCompatActivity {
         DatabaseReference databaseReference = firebaseDatabase.getReference("Posts");
         String uniqueKey = databaseReference.push().getKey();
 
-        Post post = new Post(uniqueKey, "Alice", timestamp, description, title, imageUrl, null);
+        if (uniqueKey != null) {
+            Post post = new Post(uniqueKey, "Alice", timestamp, description, title, imageUrl, null);
 
-        HashMap<String, Object> map = new HashMap<>();
-        map.put(uniqueKey, post);
+            HashMap<String, Object> map = new HashMap<>();
+            map.put(uniqueKey, post);
 
-        databaseReference.updateChildren(map)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        progressDialog.dismiss();
-                        Toast.makeText(AddPostActivity.this, "Post Added...", Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        progressDialog.dismiss();
-                        Toast.makeText(AddPostActivity.this, "Failed to add post", Toast.LENGTH_SHORT).show();
-                    }
-                });
+            databaseReference.updateChildren(map)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            progressDialog.dismiss();
+                            Toast.makeText(AddPostActivity.this, "Post Added...", Toast.LENGTH_SHORT).show();
+
+                            // Log the formatted timestamp for debugging
+                            Log.d("FormattedTimestamp", post.getFormattedTimestamp());
+
+                            // Assuming you have a TextView to show the formatted timestamp
+                            TextView timestampTextView = findViewById(R.id.date);
+                            timestampTextView.setText("Formatted Timestamp: " + post.getFormattedTimestamp());
+
+                            finish();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                            Toast.makeText(AddPostActivity.this, "Failed to add post", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        } else {
+            progressDialog.dismiss();
+            Toast.makeText(AddPostActivity.this, "Failed to get unique key", Toast.LENGTH_SHORT).show();
+        }
     }
+
 
 }
