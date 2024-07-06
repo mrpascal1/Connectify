@@ -35,10 +35,29 @@ public class Post {
     }
 
     public String getFormattedTimestamp() {
-        long time = Long.parseLong(timestamp);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        Date date = new Date(time);
-        return sdf.format(date);
+        long timestampLong = Long.parseLong(timestamp);
+        Date date = new Date(timestampLong);
+
+        // Custom date format
+        SimpleDateFormat dayFormat = new SimpleDateFormat("d", Locale.getDefault());
+        SimpleDateFormat monthYearFormat = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
+
+        String day = dayFormat.format(date);
+        String suffix = getDayOfMonthSuffix(Integer.parseInt(day));
+
+        return day + suffix + " " + monthYearFormat.format(date);
+    }
+
+    private String getDayOfMonthSuffix(int n) {
+        if (n >= 11 && n <= 13) {
+            return "th";
+        }
+        switch (n % 10) {
+            case 1: return "st";
+            case 2: return "nd";
+            case 3: return "rd";
+            default: return "th";
+        }
     }
 
     public String getDescription() {
