@@ -1,6 +1,8 @@
 package com.shahid.connectify;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -23,6 +25,8 @@ public class AddPostActivity extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     ProgressDialog progressDialog;
 
+    private String imageUrl;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +36,10 @@ public class AddPostActivity extends AppCompatActivity {
         initProgressDialog();
 
         firebaseDatabase = FirebaseDatabase.getInstance();
+
+        SharedPreferences sharedPref = this.getSharedPreferences(
+                "com.shahid.connectify", Context.MODE_PRIVATE);
+        imageUrl = sharedPref.getString("imageUrl", "");
 
         binding.addPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +78,7 @@ public class AddPostActivity extends AppCompatActivity {
         DatabaseReference databaseReference = firebaseDatabase.getReference("Posts");
         String uniqueKey = databaseReference.push().getKey();
 
-        Post post = new Post(uniqueKey, "Alice", timestamp, description, title, "");
+        Post post = new Post(uniqueKey, "Alice", timestamp, description, title, imageUrl);
 
         HashMap<String, Object> map = new HashMap<>();
         map.put(uniqueKey, post);
