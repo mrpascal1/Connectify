@@ -92,15 +92,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
+                android:textColor="@color/black"
                 android:textSize="14sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingStart="8dp"
-                android:paddingLeft="8dp"
-                android:text="Likes"
-                android:textSize="14sp" />
         </LinearLayout>
 
         <View
@@ -115,6 +109,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
+                android:id="@+id/likeLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -124,6 +119,7 @@
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/likeIv"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/baseline_favorite_border_24"
