@@ -111,6 +111,13 @@ public class MainActivity extends AppCompatActivity {
         editor.commit();
     }
 
+    private void saveUserName(String name) {
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("username", name);
+        editor.apply();
+        editor.commit();
+    }
+
     private void fetchUserData() {
         DatabaseReference reference = firebaseDatabase.getReference("Users/" + getUID());
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -120,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
                     User user = snapshot.getValue(User.class);
                     if (user != null) {
                         saveImageUrl(user.getImageUrl());
+                        saveUserName(user.getUsername());
                     }
                 }
             }

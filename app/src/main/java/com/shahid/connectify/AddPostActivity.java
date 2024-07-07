@@ -29,7 +29,7 @@ public class AddPostActivity extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     ProgressDialog progressDialog;
 
-    private String imageUrl;
+    private String imageUrl, username;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,6 +44,7 @@ public class AddPostActivity extends AppCompatActivity {
         SharedPreferences sharedPref = this.getSharedPreferences(
                 "com.shahid.connectify", Context.MODE_PRIVATE);
         imageUrl = sharedPref.getString("imageUrl", "");
+        username = sharedPref.getString("username", "");
 
         binding.addPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +83,7 @@ public class AddPostActivity extends AppCompatActivity {
         DatabaseReference databaseReference = firebaseDatabase.getReference("Posts");
         String uniqueKey = databaseReference.push().getKey();
 
-        Post post = new Post(uniqueKey, "Alice", timestamp, description, title, imageUrl, null);
+        Post post = new Post(uniqueKey, username, timestamp, description, title, imageUrl, null);
 
         HashMap<String, Object> map = new HashMap<>();
         map.put(uniqueKey, post);
