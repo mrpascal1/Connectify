@@ -2,6 +2,7 @@ package com.shahid.connectify;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -48,6 +49,8 @@ public class ChoosePictureActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
 
+    private ProgressDialog progressDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,8 @@ public class ChoosePictureActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         firebaseAuth = FirebaseAuth.getInstance();
+
+        initProgressDialog();
 
         binding.editIv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,10 +97,21 @@ public class ChoosePictureActivity extends AppCompatActivity {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users/" + getUid());
         HashMap<String, Object> map = new HashMap<>();
         map.put("imageUrl", uri.toString());
-        databaseReference.updateChildren(map);
+        databaseReference.updateChildren(map)
+                .addOnSuccessListener(unused -> {
+                    progressDialog.dismiss();
+                    Intent intent = new Intent(ChoosePictureActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    finish();
+                })
+                .addOnFailureListener(e -> {
+                    progressDialog.dismiss();
+                });
     }
 
     private void uploadImage() {
+        progressDialog.dismiss();
         String fileName = "Profile_Pictures/" + "Profile" + "_" + getUid();
         StorageReference storageReference = FirebaseStorage.getInstance().getReference(fileName);
         storageReference.putFile(imageUri)
@@ -118,7 +134,7 @@ public class ChoosePictureActivity extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-
+                        progressDialog.dismiss();
                     }
                 });
     }
@@ -147,5 +163,12 @@ public class ChoosePictureActivity extends AppCompatActivity {
         }
     }
 
+    private void initProgressDialog() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Uploading profile picture...");
+        progressDialog.setTitle("Connectify");
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+    }
 
 }

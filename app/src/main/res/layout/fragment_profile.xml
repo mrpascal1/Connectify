@@ -38,7 +38,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:src="@drawable/img1"/>
 
     <TextView
@@ -58,16 +58,18 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-black"
         android:text="Bio"
+        android:textSize="16sp"
         android:layout_marginTop="8dp"
         android:textStyle="bold"
         android:layout_gravity="center_horizontal"/>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/editProfileBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Edit Profile "
         android:backgroundTint="@color/blue"
+        android:textColor="@color/white"
         android:layout_marginTop="8dp"
         android:layout_gravity="center_horizontal"
         />
@@ -78,6 +80,7 @@
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:text="Posts"
+        android:paddingHorizontal="4dp"
         android:background="@color/blue"
         android:textStyle="bold"
         android:textColor="@color/black"

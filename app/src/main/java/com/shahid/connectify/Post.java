@@ -1,6 +1,9 @@
 package com.shahid.connectify;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class Post {
     private String username, postId;
@@ -24,6 +27,33 @@ public class Post {
 
     public Post() {
 
+    }
+
+
+    public String getFormattedTimestamp() {
+        long timestampLong = Long.parseLong(timestamp);
+        Date date = new Date(timestampLong);
+
+        // Custom date format
+        SimpleDateFormat dayFormat = new SimpleDateFormat("d", Locale.getDefault());
+        SimpleDateFormat monthYearFormat = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
+
+        String day = dayFormat.format(date);
+        String suffix = getDayOfMonthSuffix(Integer.parseInt(day));
+
+        return day + suffix + " " + monthYearFormat.format(date);
+    }
+
+    private String getDayOfMonthSuffix(int n) {
+        if (n >= 11 && n <= 13) {
+            return "th";
+        }
+        switch (n % 10) {
+            case 1: return "st";
+            case 2: return "nd";
+            case 3: return "rd";
+            default: return "th";
+        }
     }
 
 

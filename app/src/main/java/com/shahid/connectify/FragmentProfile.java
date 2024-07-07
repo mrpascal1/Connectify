@@ -1,5 +1,6 @@
 package com.shahid.connectify;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -25,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.shahid.connectify.databinding.FragmentProfileBinding;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -52,14 +54,62 @@ public class FragmentProfile extends Fragment {
         postList = new ArrayList<>();
         firebaseDatabase = FirebaseDatabase.getInstance();
         postAdapter = new PostAdapter(requireActivity(), postList, "");
+
+        postAdapter.setiAdapterClick(new IAdapterClick() {
+            @Override
+            public void onLikeClick(int position, String postId) {
+                setLike(postId);
+            }
+        });
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireActivity(), RecyclerView.VERTICAL, true);
         linearLayoutManager.setStackFromEnd(true);
         binding.postRecyclerView.setLayoutManager(linearLayoutManager);
         binding.postRecyclerView.setAdapter(postAdapter);
 
+        binding.editProfileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(requireContext(), EditProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
         setProfileData();
         getData();
     }
+
+
+
+    private String getUID() {
+        if (firebaseAuth.getCurrentUser() != null) {
+            return firebaseAuth.getCurrentUser().getUid();
+        }
+        return "";
+    }
+
+    private void setLike(String postId) {
+        DatabaseReference likeRef =  firebaseDatabase.getReference("Posts/" + postId + "/likes");
+        DatabaseReference userRef =  firebaseDatabase.getReference("Posts/" + postId + "/likes/" + getUID());
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    userRef.removeValue();
+                } else {
+                    HashMap<String, Object> map = new HashMap<>();
+                    map.put(getUID(), true);
+                    likeRef.updateChildren(map);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
 
     private void setProfileData() {
         String uid = "";
@@ -67,14 +117,16 @@ public class FragmentProfile extends Fragment {
             uid = firebaseAuth.getCurrentUser().getUid();
         }
         DatabaseReference reference = firebaseDatabase.getReference("Users/" + uid);
-        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     User user = snapshot.getValue(User.class);
                     if (user != null) {
                         binding.username.setText(user.getUsername());
-                        binding.bio.setText("Dummy bio");
+                        if (user.getBio() != null) {
+                            binding.bio.setText(user.getBio());
+                        }
                         Glide.with(requireContext()).load(user.getImageUrl()).into(binding.profileIv);
                     }
                 }
