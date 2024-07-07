@@ -126,6 +126,7 @@
                     android:contentDescription="Likes" />
 
                 <TextView
+                    android:id="@+id/likeTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -140,6 +141,7 @@
                 android:background="#c1d7d9" />
 
             <LinearLayout
+                android:id="@+id/shareLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

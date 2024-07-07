@@ -208,7 +208,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     progressDialog.dismiss();
 
                     // Navigate to MainActivity or any other activity
-                    Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
+                    Intent intent = new Intent(RegistrationActivity.this, ChoosePictureActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     finish();
